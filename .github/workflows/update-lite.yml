@@ -1,0 +1,21 @@
+name: Update epg-lite.xml.gz
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"   # kas 6 valandas
+  workflow_dispatch:        # leidžia paleisti rankiniu būdu
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Download epg-lite.xml.gz
+        run: curl -o epg-lite.xml.gz https://bobor.pm/epg/epg-lite.xml.gz
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: "Automatinis epg-lite.xml.gz atnaujinimas"
